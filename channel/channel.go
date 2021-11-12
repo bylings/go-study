@@ -11,8 +11,12 @@ func main() {
 		通道变量名，变量声明的是建议具有 ch 或 chan
 	*/
 	ch := make(chan string) // 创建通道  - 字符串类型通道
-	go send(ch)
-	go recv(ch)
+	//go send(ch)
+	//go recv(ch)
+
+	go sendOnly(ch)
+	go sendOnly(ch)
+
 	time.Sleep(time.Second * 2)
 }
 
@@ -35,4 +39,12 @@ func recv(ch chan string) { // 通道参数引用
 	if <-ch == "ccccc" {
 		fmt.Println("接收到的：ccccc")
 	}
+}
+
+func sendOnly(ch chan<- string) {
+	ch <- "1111"
+}
+
+func recvOnly(ch <-chan string) {
+	fmt.Println("接收到的通道信息：", <-ch)
 }
